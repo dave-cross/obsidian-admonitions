@@ -1,4 +1,47 @@
-/* Sets all the text color to red! */
-body {
-    color: red;
+.admonition--success {
+  --admonition-color: green;
+}
+
+.admonition--warning,
+.admonition--tip {
+  --admonition-color: #e7c000;
+}
+
+.admonition--alert,
+.admonition--error,
+.admonition--bug,
+.admonition--danger {
+  --admonition-color: firebrick;
+}
+
+.admonition--info,
+.admonition--note {
+  --admonition-color: dodgerblue;
+}
+
+.admonition {
+  padding: 1rem;
+  background: linear-gradient(
+      hsla(0, 100%, 100%, 0.8),
+      hsla(0, 100%, 100%, 0.8)
+    ),
+    linear-gradient(
+      var(--admonition-color, grey),
+      var(--admonition-color, grey)
+    );
+  border-left: 8px solid var(--admonition-color, grey);
+  margin-bottom: 1rem;
+}
+.admonition__heading {
+  color: var(--admonition-color, grey);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: larger;
+  text-transform: uppercase;
+  filter: brightness(90%);
+}
+
+.admonition__content {
+  color: var(--admonition-color, grey);
+  filter: brightness(50%);
 }
