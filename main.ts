@@ -43,18 +43,20 @@ function posthtmlAdmonitions(tree: any) {
       return node;
     }
 
-    const newContent = node.content
-      .filter((item: any) => typeof item === "string" || item.tag !== "br")
-      .slice(0, -1);
-    const [, defaultTitle = "Note", ...titleItems] = newContent[0].split(" ");
+    const newContent = [];
+    const oldContent = node.content.filter(
+      (item: any) => typeof item === "string" || item.tag !== "br"
+    );
+    const [, defaultTitle = "Note", ...customTitle] = oldContent[0].split(" ");
     newContent[0] = {
       tag: "div",
-      content: [titleItems.join(" ") || defaultTitle],
+      content: [customTitle.join(" ") || defaultTitle],
       attrs: { class: "admonition__heading" },
     };
     newContent[1] = {
       tag: "div",
-      content: newContent.slice(1),
+      // include remaining except last `\n:::`.
+      content: oldContent.slice(1, -1),
       attrs: { class: "admonition__content" },
     };
 
@@ -65,7 +67,8 @@ function posthtmlAdmonitions(tree: any) {
       },
     });
 
-    node.content = newContent.slice(0, 2);
+    node.content = newContent;
+
     return node;
   });
 }
